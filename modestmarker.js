@@ -1,5 +1,3 @@
-// example usage:
-// var marker = new ModestMarker(modestMapsInstance, {latitude: 37.80544394934271, longitude: -122.25791931152344})
 function ModestMarker (map, options) {
   var me = this
   if (!options) options = {}
