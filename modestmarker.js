@@ -25,8 +25,7 @@ function ModestMarker (map, options) {
 
 ModestMarker.prototype.updatePosition = function() {
   var me = this
-  var point = me.map.locationPoint(me.location)
-
-  me.div.style.left = point.x + 'px'
-  me.div.style.top = point.y + 'px'
+  var point = me.map.locationPoint(me.location)  
+  me.div.style.left = point.x - me.img.width / 2 + 'px'
+  me.div.style.top = point.y - me.img.height + 'px'
 }
