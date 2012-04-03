@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Modest Edit</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <style type="text/css">
+      #mapbox { position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; }
+    </style>
+    <script src="vendor/modestmaps.js"></script>
+    <script src="vendor/tile.stamen.js"></script>
+    <script src="modestmarker.js"></script>
+    <script>
+      var app = {}
+      
+      function getPosition(callback) {
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            if (callback) callback(false, position)
+          },
+          function(error) {
+            if (callback) callback(error)
+          },
+          { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true }
+        )
+      }
+      
+      function locateAndSetMap(callback) {
+        getPosition(function(err, position) {
+          if (err) {
+            console.error(err)
+            position = {coords: {latitude: 37.80544394934271, longitude: -122.25791931152344}}
+          }
+          app.map.setCenterZoom(new MM.Location(position.coords.latitude, position.coords.longitude), 12)
+          if (callback) callback()
+        })
+      }
+
+      function showMap() {
+        var layer = new MM.StamenTileLayer("terrain")
+        app.map = new MM.Map("mapbox", layer)
+      }
+      
+      document.addEventListener('DOMContentLoaded', function() {
+        showMap()
+        locateAndSetMap(function() {
+          app.marker = new ModestMarker(app.map, {latitude: 37.80544394934271, longitude: -122.25791931152344})          
+        })
+      })
+    </script>
+  </head>
+  <body>
+    <div id="mapbox"></div>
+  </body>
+</html>
