@@ -29,3 +29,30 @@ ModestMarker.prototype.updatePosition = function() {
   me.div.style.left = point.x - me.img.width / 2 + 'px'
   me.div.style.top = point.y - me.img.height + 'px'
 }
+
+ModestMarker.prototype.setPopup = function(html, offsetY) {
+  var me = this
+  me.offsetY = offsetY || 0
+  me.popup = document.createElement('div')
+  me.popup.className = 'popup'
+  me.popup.style.display = "none"
+  me.popup.style.position = "absolute"
+  me.popup.innerHTML = html
+  me.map.parent.appendChild(me.popup)
+  me.div.onmouseover = function() { me.showPopup.call(me) }
+  me.div.onmouseout = function() { me.hidePopup.call(me) }
+}
+
+ModestMarker.prototype.hidePopup = function(e) {
+  var me = this
+  me.img.style.cursor = 'default'
+  me.popup.style.display = 'none'
+}
+
+ModestMarker.prototype.showPopup = function(e) {
+  var me = this
+  me.popup.style.display = 'block'
+  me.popup.style.left = me.div.offsetLeft - .5 * me.popup.offsetWidth + .5 * me.img.width + 'px'
+  me.popup.style.top = me.div.offsetTop - me.popup.offsetHeight - me.offsetY + 'px'
+  me.img.style.cursor = 'pointer'
+}

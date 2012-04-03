@@ -5,6 +5,26 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <style type="text/css">
       #mapbox { position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; }
+      
+      .hexagon-outer {
+          width: 45px; height: 52px; float: left; margin: 5px;
+          overflow: hidden; visibility: hidden; cursor: pointer;
+          -webkit-transform: rotate(120deg);
+             -moz-transform: rotate(120deg);
+               -o-transform: rotate(120deg);
+                  transform: rotate(120deg);}
+      .hexagon-middle { overflow: hidden; width: 100%; height: 100%;
+          -webkit-transform: rotate(-60deg);
+             -moz-transform: rotate(-60deg);
+               -o-transform: rotate(-60deg);
+                  transform: rotate(-60deg); }
+      .hexagon-inner { width: 100%; height: 100%; background-repeat: no-repeat; background-position: 50%; visibility: visible;
+        background-image: url('http://placekitten.com/45/52'); background-color: salmon;
+          -webkit-transform: rotate(-60deg);
+             -moz-transform: rotate(-60deg);
+               -o-transform: rotate(-60deg);
+                  transform: rotate(-60deg);}
+      
     </style>
     <script src="vendor/modestmaps.js"></script>
     <script src="vendor/tile.stamen.js"></script>
@@ -44,11 +64,21 @@
         showMap()
         locateAndSetMap(function() {
           app.marker = new ModestMarker(app.map, {latitude: 37.80544394934271, longitude: -122.25791931152344})          
+          app.marker.setPopup(document.querySelectorAll('.popup')[0].text, -5)
         })
       })
     </script>
   </head>
   <body>
     <div id="mapbox"></div>
+    
+    <script type="text/template" class="popup">
+      <div class="hexagon-outer">
+        <div class="hexagon-middle">
+          <div class="hexagon-inner">
+          </div>
+        </div>
+      </div>
+    </script>
   </body>
 </html>
