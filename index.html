@@ -29,6 +29,8 @@
     </style>
     <script src="vendor/modestmaps.js"></script>
     <script src="vendor/tile.stamen.js"></script>
+    <script src="vendor/smokesignals.js"></script>
+    <script src="vendor/zepto.js"></script>
     <!-- // <script src="vendor/phantomlimb.js"></script> -->
     <script src="modestmarker.js"></script>
     <script>
@@ -65,8 +67,10 @@
       document.addEventListener('DOMContentLoaded', function() {
         showMap()
         locateAndSetMap(function() {
-          app.marker = new ModestMarker(app.map, {latitude: 37.80544394934271, longitude: -122.25791931152344})          
-          app.marker.setPopup(document.querySelectorAll('.popup')[0].text, {offsetY: -5})
+          for (var n = 0; n < 9; n++) {
+            var marker = new ModestMarker(app.map, {latitude: 37.80 + n/100, longitude: -122.25791931152344})          
+            marker.setPopup(document.querySelectorAll('.popup')[0].text, {offsetY: -5})
+          }
         })
       })
     </script>
