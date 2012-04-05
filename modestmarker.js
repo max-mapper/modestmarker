@@ -9,8 +9,6 @@ function MMarker (map, options) {
   me.map = map
   me.setID()
   
-
-  
   if (typeof me.latitude === "string") me.latitude = parseFloat(me.latitude)
   if (typeof me.longitude === "string") me.longitude = parseFloat(me.longitude)
   me.location = new MM.Location(me.latitude, me.longitude)
@@ -18,6 +16,7 @@ function MMarker (map, options) {
   me.container = document.createElement('div')
   me.container.className = 'marker'
   me.container.style.position = "absolute"
+  me.container.style.height = "0px"
   me.image = document.createElement('img')
   me.image.src = me.markerImage || 'marker-solid-24.png'
   me.container.appendChild(me.image)
@@ -28,9 +27,6 @@ function MMarker (map, options) {
   
   if (me.touch) MM.addEvent(me.container, 'touchstart', function(e) { me.togglePopup.call(me, e) })
   else MM.addEvent(me.container, 'mousedown', function(e) { me.togglePopup.call(me, e) })
-  
-  // MM.addEvent(me.container, 'mousedown', function() { console.log('container') })
-  // MM.addEvent(me.image, 'mousedown', function() { console.log('image') })
   
   me.map.addCallback('panned', function(e) { me.updatePosition.call(me, e) })
   me.map.addCallback('zoomed', function(e) { me.updatePosition.call(me, e) })
@@ -93,17 +89,16 @@ MMarker.prototype.dismissPopup = function(e) {
      }
      return false
   }
-
-  var notMapClick = (me.container === e.target || isDescendant(me.container, e.target))  
-  if (!notMapClick&& me.popup.style.display !== "none") me.hidePopup.call(me)
+  
+  var notMapClick = (me.container === e.target || isDescendant(me.container, e.target))
+  if (!notMapClick && me.popup.style.display !== "none") me.hidePopup.call(me)
 }
-
 
 MMarker.prototype.setPopup = function(html, options) {
   var me = this
   me.offsetY = options.offsetY || 0
   me.popup = document.createElement('div')
-  me.popup.className = 'popup'
+  me.popup.className = 'marker-popup'
   me.popup.style.display = "none"
   me.popup.style.position = "relative"
   me.popup.style.overflow = "auto"
@@ -111,17 +106,6 @@ MMarker.prototype.setPopup = function(html, options) {
   me.popup.innerHTML = html
   me.container.appendChild(me.popup)
   me.popupSize = me.getPopupSize()
-  
-  
-  // me.touch = ('ontouchstart' in window) ? true : false
-  // if (me.touch) me.container.ontouchstart = togglePopup
-  // 
-  // var mouseHover = (options.hover && !me.touch)
-  // if (mouseHover) me.container.onmouseover = function() { me.showPopup.call(me) }
-  // if (mouseHover) me.container.onmouseout = function() { me.hidePopup.call(me) }
-  // 
-  // var mouseClick = (!options.hover && !me.touch)
-  // if (mouseClick) me.container.onmousedown = togglePopup
 }
 
 MMarker.prototype.togglePopup = function() {
@@ -129,7 +113,6 @@ MMarker.prototype.togglePopup = function() {
   if (me.popup.style.display === "none") me.showPopup.call(me)
   else me.hidePopup.call(me)
 }
-
 
 MMarker.prototype.hidePopup = function(e) {
   var me = this

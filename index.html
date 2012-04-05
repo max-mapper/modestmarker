@@ -67,7 +67,7 @@
         locateAndSetMap(function() {
           for (var n = 0; n < 9; n++) {
             var marker = new MMarker(app.map, {latitude: 37.80 + n/100, longitude: -122.25791931152344})          
-            marker.setPopup(document.querySelectorAll('.popup')[0].text, {offsetY: -5})
+            marker.setPopup(document.querySelectorAll('.popup')[0].text, {offsetY: 0})
           }
         })
       })

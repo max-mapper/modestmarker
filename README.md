@@ -11,7 +11,9 @@ this is a modest marker for modest maps
 
 example usage:
 
-    var marker = new ModestMarker(modestMapsInstance, {latitude: 37.80544394934271, longitude: -122.25791931152344})
+    var marker = new MMarker(modestMapsInstance, {latitude: 37.80544394934271, longitude: -122.25791931152344})
+    marker.setPopup("<h1>HELLO WORLD</h1>", {offsetY: -20})
+    
 
 MIT LICENSE
 
